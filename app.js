@@ -1,75 +1,50 @@
-gsap.registerPlugin(ScrollTrigger);
+// function cursorAnimation() {
 
-function revealToSpan() {
-    document.querySelectorAll(".reveal")
-    .forEach(function (elem) {
-        // create two spans
-        let spanParent = document.createElement("span");
-        let spanChild = document.createElement("span");
+//   document.addEventListener("mousemove", function (dets) {
+//     gsap.to("#cursor", {
+//       left: dets.x,
+//       top: dets.y,
+//     });
+//   });
 
-        // parent and child both sets their respective classes
-        spanParent.classList.add("parent");
-        spanChild.classList.add("child");
+// }
 
+// cursorAnimation();
 
-        // span parent gets child and child gets elem details
-        spanChild.innerHTML = elem.innerHTML;
-        spanParent.appendChild(spanChild);
+let navlogo = document.querySelector(".nav-logo")
 
-        // elem replaces is value with parent
-        elem.innerHTML = "";
-        elem.appendChild(spanParent);
-    })
-}
+console.log(navlogo)
+function loadingAnimation() {
+  gsap.to(navlogo, {
+    opacity: 0,
+    duration : .1,
+    scrollTrigger: {
+      trigger: navlogo,
+      scroller : 'body',
+      start: "top 0%", 
+    }
+  })
+};
 
-function valueSetters(){
-    
-    gsap.set("#text-container .parent .child", { y: "0%" })
-    gsap.set("#second-sec .parent .child", { y: "0%" })
-
-
-}
-
-function animateHomepage(){
-    
-    let tl = gsap.timeline();
-
-    tl
-    .from("#text-container .parent .child", {
-        y: "100%",
-        duration: 1,
-        ease: Power3
-    })
-    .to(".nav-logo", {
-        display: "none",
-        duration: 1,
-        ease: Power3,
-        scrollTrigger:{
-            trigger:"#text-container",
-            scroller:"body",
-            markers:true,
-            start: "top 30%"
-            
-        }
-
-    })
-    .from("#second-sec .parent .child", {
-        y: "100%",
-        duration: 5,
-        ease: Power3,
-        scrollTrigger:{
-            trigger:"#second-sec .parent .child",
-            scroller:"body",
-            markers:true,
-            start: "top 90%"
-            
-        }
-
-    })
-   
-}
+loadingAnimation();
 
 
-revealToSpan();
-valueSetters();
-animateHomepage();
+function textReveelAnimation() {
+  const elements = document.querySelectorAll("#main .heading");
+
+  // Loop through each element and define GSAP animations with ScrollTrigger
+  elements.forEach((element, index) => {
+    gsap.to(element, {
+      y: "0%", // Adjust the animation properties as needed
+      duration: 1.2,
+      scrollTrigger: {
+        trigger: element,
+        start: "top 96%", // Adjust the start position as needed
+        end: "top 16%", // Adjust the end position as needed
+        toggleActions: "play reverse play reverse", // Controls the direction of the animation
+      }
+    });
+  });
+};
+
+textReveelAnimation();
